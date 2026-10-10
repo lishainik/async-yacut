@@ -1,60 +1,46 @@
-### Как запустить проект Yacut:
+# YaCut
 
-Клонировать репозиторий и перейти в него в командной строке:
-
-```
-git clone 
-```
+Учебны сервис сокращения ссылок с веб-интерфейсом на русском, JSON REST API и загрузкой
+файлов на Яндекс Диск — с автоматическим сокращением ссылок на скачивание.
 
 ```
-cd yacut
+POST /api/id/               {"url": "https://example.com/"}
+→ 201  {"url": "...", "short_link": "http://127.0.0.1:5000/aB3xY9"}
+
+GET /api/id/aB3xY9/
+→ 200  {"url": "https://example.com/"}
 ```
 
-Cоздать и активировать виртуальное окружение:
+---
 
-```
+## Установка
+
+
+git clone https://github.com/mraksdev/async-yacut.git
+cd async-yacut
+
 python3 -m venv venv
-```
+source venv/bin/activate                    # Linux / macOS
+source venv/scripts/activate                # Windows, Git Bash
+.\venv\Scripts\Activate.ps1                 # Windows, PowerShell
 
-* Если у вас Linux/macOS
-
-    ```
-    source venv/bin/activate
-    ```
-
-* Если у вас windows
-
-    ```
-    source venv/scripts/activate
-    ```
-
-Установить зависимости из файла requirements.txt:
-
-```
 python3 -m pip install --upgrade pip
-```
-
-```
 pip install -r requirements.txt
-```
 
-Создать в директории проекта файл .env с четыремя переменными окружения:
+Файл переменной окружения создается по образцу env.example
 
-```
-FLASK_APP=yacut
-FLASK_ENV=development
-SECRET_KEY=your_secret_key
-DB=sqlite:///db.sqlite3
-```
+### Создание базы данных
 
-Создать базу данных и применить миграции:
+Таблицы созадются с помощью команд
 
-```
-flask db upgrade
-```
 
-Запустить проект:
+flask shell
 
-```
+>>> from yacut import db
+>>> db.create_all()
+>>> exit()
+
+## Запуск
+
 flask run
-```
+
