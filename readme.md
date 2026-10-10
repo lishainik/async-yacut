@@ -3,15 +3,6 @@
 Учебны сервис сокращения ссылок с веб-интерфейсом на русском, JSON REST API и загрузкой
 файлов на Яндекс Диск — с автоматическим сокращением ссылок на скачивание.
 
-```
-POST /api/id/               {"url": "https://example.com/"}
-→ 201  {"url": "...", "short_link": "http://127.0.0.1:5000/aB3xY9"}
-
-GET /api/id/aB3xY9/
-→ 200  {"url": "https://example.com/"}
-```
-
----
 
 ## Установка
 
@@ -36,9 +27,11 @@ pip install -r requirements.txt
 
 flask shell
 
+```
 >>> from yacut import db
 >>> db.create_all()
 >>> exit()
+```
 
 ## Запуск
 
