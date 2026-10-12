@@ -74,8 +74,7 @@ async def upload_file(
     Returns:
         str: Path of the uploaded file on Yandex Disk.
     """
-    async with session.put(upload_link, data=content) as response:
-        location = response.headers['Location']
+    async with session.put(upload_link, data=content):
         return upload_link
 
 
