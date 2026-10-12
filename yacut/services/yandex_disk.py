@@ -1,7 +1,6 @@
 """Async client for the Yandex Disk REST API."""
 
 import os
-from urllib.parse import unquote
 from http import HTTPStatus
 import aiohttp
 
@@ -56,7 +55,7 @@ async def fetch_upload_link(
     ) as response:
         data = await response.json()
         if response.status != HTTPStatus.OK:
-            raise ValueError(f'Ошибка загрузки файла')
+            raise ValueError('Ошибка загрузки файла')
         return data['href']
 
 
@@ -101,7 +100,7 @@ async def fetch_download_link(
     ) as response:
         data = await response.json()
         if response.status != HTTPStatus.OK:
-                    raise ValueError(f'Ошибка загрузки файла')
+            raise ValueError('Ошибка загрузки файла')
         return data['href']
 
 
