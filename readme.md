@@ -35,5 +35,6 @@ flask shell
 
 ## Запуск
 
+flask db upgrade
 flask run
 

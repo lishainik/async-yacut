@@ -4,7 +4,7 @@ from http import HTTPStatus
 
 from flask import Response, jsonify, render_template, request
 
-from yacut import app
+from yacut import app, db
 from yacut.constants import NOT_FOUND_MESSAGE
 
 ERROR_TEMPLATE = 'errors/error.html'
@@ -48,6 +48,7 @@ def handle_server_error(error) -> tuple[Response, int]:
         tuple[Response, int]: Error response with the 500 status code.
     """
     status_code = int(HTTPStatus.INTERNAL_SERVER_ERROR)
+    db.session.rollback() 
     if is_api_request():
         return jsonify({'message': SERVER_ERROR_MESSAGE}), status_code
     return render_template(

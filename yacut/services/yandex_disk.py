@@ -2,7 +2,7 @@
 
 import os
 from urllib.parse import unquote
-
+from http import HTTPStatus
 import aiohttp
 
 API_HOST = 'https://cloud-api.yandex.net/'
@@ -55,6 +55,8 @@ async def fetch_upload_link(
         headers=get_auth_headers(),
     ) as response:
         data = await response.json()
+        if response.status != HTTPStatus.OK:
+            raise ValueError(f'Ошибка загрузки файла')
         return data['href']
 
 
@@ -75,7 +77,7 @@ async def upload_file(
     """
     async with session.put(upload_link, data=content) as response:
         location = response.headers['Location']
-        return unquote(location).replace('/disk', '', 1)
+        return upload_link
 
 
 async def fetch_download_link(
@@ -98,6 +100,8 @@ async def fetch_download_link(
         headers=get_auth_headers(),
     ) as response:
         data = await response.json()
+        if response.status != HTTPStatus.OK:
+                    raise ValueError(f'Ошибка загрузки файла')
         return data['href']
 
 
